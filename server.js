@@ -12,31 +12,17 @@ monEcouteur.emit('saute')
 monEcouteur.emit('saute')
 monEcouteur.emit('saute')
 */
+let app = require('express')()
 
-let http = require('http')
-let fs = require('fs')
-let url = require('url')
-const EventEmitter = require('events')
+app.get('/', (request, response) => {
+    response.send('Salut tu es à la racine')
+})
 
-let App = {
-    start: function (port) {
-        let emitter = new EventEmitter()
-        let server = http.createServer((request, response) => {
-            response.writeHead(200)
-            if (request.url === '/') {
-                emitter.emit('root', response)
-            }
-            response.end()
-        }).listen(port)
-        return emitter
-    }
-}
+app.get('/demo', (request, response) => {
+    response.send('Salut tu es sur la démo')
+})
 
-let app = App.start(8080)
-app.on('root', function (response) {    
-    response.write('Je suis a la racine')
-}) 
-
+app.listen(8080)
 /*
 let server = http.createServer()
 server.on('request', (request, response) => {
